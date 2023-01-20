@@ -1,0 +1,20 @@
+#Documentação:https://httpd.apache.org/docs/2.4/rewrite/flags.html
+#Ativa o modo Rewrite que faz a reescrita da URL.
+
+RewriteEngine On
+#Rewritecond: Define a condição para uma regra.
+#REQUEST_FILLENAME  é o caminho completo para o diretorio que atende ao request original,
+#tomando por base o filesystem da máquina, e não relativo á hospedagem.
+#RewriteCond %(REQUEST_FILENAME) !-d informa que será criado uma condição  a ser
+#aplicado ao nome do diretorio requisitado. A exclamção é o sinal de negação e -d pede
+#para verificar a existência de um diretorio fisico. Ex: Condição  = SE ARQUIVO_REQUISITADO
+#NÃO EXISTE COMO DIRETORIO FISICAMENTE.
+
+RewriteCond %{REQUEST_FILLENAME} !-d
+RewriteCond %{REQUEST_FILLENAME} !-f
+RewriteCond %{REQUEST_FILLENAME} !-l
+
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+
+#index.php?url=users/index&id=2&sit=2
+#http://localhost/projetos/projeto_MVC/index?id=2&sit=2
